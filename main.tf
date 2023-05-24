@@ -35,7 +35,7 @@ resource "aws_instance" "master" {
 
 resource "aws_ec2_instance_state" "start-stop-master" {
   instance_id = aws_instance.master.id
-  state = "started"
+  state = "stopped"
 }
 
 resource "aws_instance" "slaves" {
