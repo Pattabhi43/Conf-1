@@ -18,15 +18,9 @@ data "aws_ami" "ami-1" {
   most_recent = true
 }
 
-data "aws_key_pair" "master" {
-  owners = ["137112412989"]
-  most_recent = true
-}
-
 resource "aws_instance" "master" {
   ami           = data.aws_ami.ami-1.id
   instance_type = "t2.micro"
-  key_name = data.aws_key_pair.master.key_name
   tags = {
     Name = "Master"
   }
@@ -46,14 +40,9 @@ resource "aws_ec2_instance_state" "start-stop-master" {
 
 resource "aws_instance" "slaves" {
   count         = 3
-  ami           = "ami-0b7acb262cc9ea2ea"
+  ami           = data.aws_ami.ami-1.id
   instance_type = "t2.micro"
   tags = {
     Name = "slaves"
   }
-}
-
-resource "aws_ec2_instance_state" "start-stop-slave" {
-  instance_id = aws_instance.slaves.id
-  state = "started"
 }
