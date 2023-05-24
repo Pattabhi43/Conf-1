@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Init') {
+            steps {
+                echo 'terraform process starts here'
+                sh 'terraform init'
+            }
+        }
+
+        stage ('Plan') {
+            steps {
+                echo 'Plan process'
+                sh 'terraform plan'
+            }
+        }
+
+        stage ('Action') {
+            steps {
+                echo 'Real deal'
+                sh 'terraform ${action} --auto-approve'
+            }
+        }
+    }
+}
