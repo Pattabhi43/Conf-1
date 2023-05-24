@@ -31,12 +31,6 @@ resource "aws_instance" "master" {
     Name = "Master"
   }
 
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    private_key = "master.pem"
-    host        = "${self.public_ip}"
-  }
   provisioner "remote-exec" {
     inline = [
       "sudo amazon-linux-extras install ansible2 -y",
